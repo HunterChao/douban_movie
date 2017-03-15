@@ -68,13 +68,13 @@ class DangdangSpider(RedisSpider):
                 for goods in goodslist:
                     item = DangdangItem()
                     try:
-                        item['comments'] = goods.xpath('div/p[2]/a/text()').pop()
-                        item['title'] = goods.xpath('div/p[1]/a/text()').pop()
-                        item['time'] = goods.xpath('div/div/p[2]/text()').pop().replace("/", "")
-                        item['price'] = goods.xpath('div/p[6]/span[1]/text()').pop()
+                        item['comments'] = goods.xpath('div/p[2]/a/text()').pop().replace('条评论','')
+                        item['title'] = goods.xpath('div/p[1]/a/text()').pop().strip()  #去空格，直接清洗数据
+                        item['time'] = goods.xpath('div/div/p[2]/text()').pop().replace("/", "").strip()
+                        item['price'] = goods.xpath('div/p[6]/span[1]/text()').pop().replace('¥','')
                         item['discount'] = goods.xpath('div/p[6]/span[3]/text()').pop()
-                        item['category1'] = response.meta["ID4"]       # 种类(小)
-                        item['category2'] = response.meta["ID2"]       # 种类(大)
+                        item['category1'] = response.meta["ID4"].repalce('\r\n','')      # 种类(小)
+                        item['category2'] = response.meta["ID2"].repalce('\r\n  ','')      # 种类(大)
                     except Exception:
                         pass
                     yield item
