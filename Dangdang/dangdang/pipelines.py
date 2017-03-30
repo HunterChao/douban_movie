@@ -24,7 +24,7 @@ class DangdangPipeline(object):
             try:
                 book_info = dict(item)  #
                 if self.post.insert(book_info):
-                    print('ssssss')
+                    print('s')
             except Exception:
                 pass
         # elif isinstance(item,PicItem):
